@@ -1,8 +1,13 @@
 // JSON Server module
-const jsonServer = require("json-server");
+import jsonServer from 'json-server'
+import path from 'path'
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const _filename= fileURLToPath(import.meta.url)
+const __dirname=path.dirname(_filename)
+
 const server = jsonServer.create();
-const fs = require('fs');
-const path = require('path');
 const middlewares = jsonServer.defaults();
 // Make sure the db.json is only read-only and served from memory to avoid errors when deployed to vercel.
 const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'db.json'), 'utf-8'));
@@ -23,4 +28,4 @@ server.listen(3000, () => {
 });
 
 // Export the Server API
-module.exports = server;
+export default server;
